@@ -1,16 +1,16 @@
-import csv
+import csv # for reading the CSV file
 
 def load_questions(filepath="questions.csv"):
     """
-    Reads questions from a CSV file and returns a list of question dictionaries.
+    Load questions from a CSV file and return a list of question dictionaries.
     """
+    
     questions = []
 
     with open(filepath, newline="", encoding="utf-8") as csvfile:
         reader = csv.DictReader(csvfile)
-
         for row in reader:
-            question = {
+            questions.append({
                 "question": row["question"],
                 "options": [
                     row["option_a"],
@@ -19,9 +19,6 @@ def load_questions(filepath="questions.csv"):
                     row["option_d"],
                 ],
                 "correct": int(row["correct"]) - 1
-            }
-            questions.append(question)
+            })
 
     return questions
-
-print(load_questions())
