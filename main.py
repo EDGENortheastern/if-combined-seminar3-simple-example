@@ -10,8 +10,8 @@ BUTTON_TEXT = "#2d7496"
 
 questions = load_questions()
 
-
 class QuizApp(tk.Tk):
+    
     """
     A class that represents the quiz application.
     """
@@ -59,6 +59,10 @@ class QuizApp(tk.Tk):
         self.submit_button.pack(pady=10)
 
     def handle_submit(self):
+        
+        """Saves the student name, score and timestamp
+        to a CSV file."""
+        
         st_name = clean_name(self.name_entry.get())
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
@@ -85,15 +89,18 @@ class QuizApp(tk.Tk):
             answer_var = tk.IntVar(value=-1)
             self.answer_vars.append(answer_var)
 
+            option_value = 0
             for option in question["options"]:
                 rb = tk.Radiobutton(
                     self,
                     text=option,
                     variable=answer_var,
+                    value=option_value,
                     font=("Arial", 14),
-                    bg =  BG
+                    bg=BG
                 )
                 rb.pack(anchor="w", padx=60)
+                option_value += 1
 
             question_number += 1
 
