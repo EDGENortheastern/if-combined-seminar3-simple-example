@@ -1,7 +1,8 @@
 import tkinter as tk # for creating the GUI
 import csv # to write to csv from main
 from quiz_data import load_questions # for loading the questions
-from quiz_utils import clean_name # cleans the name
+# utility functions to clean and validate names 👇
+from quiz_utils import clean_name, character_check, length_check, presence_check
 from datetime import datetime # to record a timestamp
 
 BG = "#ffe1a5"
@@ -60,8 +61,10 @@ class QuizApp(tk.Tk):
 
     def handle_submit(self):
         
-        """Saves the student name, score and timestamp
-        to a CSV file."""
+        """
+        Saves the student name, score and timestamp
+        to a CSV file.
+        """
         
         st_name = clean_name(self.name_entry.get())
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -72,11 +75,13 @@ class QuizApp(tk.Tk):
             
         with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
-            writer.writerow([st_name, timestamp, answwers])
+            writer.writerow([st_name, timestamp, answers])
 
     def build_question_screen(self):
         
-        """Builds the question section."""
+        """
+        Builds the question section.
+        """
 
         question_number = 1
 
