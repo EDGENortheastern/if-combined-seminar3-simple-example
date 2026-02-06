@@ -1,5 +1,8 @@
 import tkinter as tk # for creating the GUI
+import csv # to write to csv from main
 from quiz_data import load_questions # for loading the questions
+from quiz_utils import clean_name # cleans the name
+
 
 BG = "#ffe1a5"
 TEXT = "#111111"
@@ -50,9 +53,16 @@ class QuizApp(tk.Tk):
             text="SUBMIT!",
             font=("Arial", 18),
             fg=BUTTON_TEXT,
-            bg=BG
+            bg=BG,
+            command=self.handle_submit
         )
         self.submit_button.pack(pady=10)
+
+    def handle_submit(self):
+        self.st_name = clean_name(self.name_entry.get())
+        with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow(self.st_name)
 
     def build_question_screen(self):
         
@@ -65,7 +75,7 @@ class QuizApp(tk.Tk):
                 self,
                 text=f"Question {question_number}. {question['question']}",
                 font=("Arial", 18),
-                wraplength=500,     # ← this is the key
+                wraplength=500,  # wrap the text if it's too long
                 justify="center",  
                 bg = BG
             )
