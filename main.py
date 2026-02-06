@@ -1,5 +1,5 @@
-import tkinter as tk
-from quiz_data import load_questions
+import tkinter as tk # for creating the GUI
+from quiz_data import load_questions # for loading the questions
 
 BG = "#ffe1a5"
 TEXT = "#111111"
@@ -7,72 +7,79 @@ BUTTON_TEXT = "#2d7496"
 
 questions = load_questions()
 
-root = tk.Tk()
-root.title("History Quiz")
-root.geometry("600x800")
-root.configure(bg=BG)
 
-instruction = tk.Label(
-    root,
-    text="Please enter your name in the box below 👇🏿",
-    bg=BG,
-    fg=TEXT,
-    font=("Arial", 20)
-)
-instruction.pack(pady=(40, 15))
+class QuizApp(tk.Tk):
+    """
+    A class that represents the quiz application.
+    """
 
-name_entry = tk.Entry(
-    root,
-    font=("Arial", 16),
-    width=20
-)
-name_entry.pack(pady=(0, 40))
+    def __init__(self, questions):
+        super().__init__()
 
-submit_button = tk.Button(
-    root,
-    text="SUBMIT",
-    fg=BUTTON_TEXT,
-    font=("Arial", 20, "bold"),
-    padx=20,
-    pady=8,
-    relief="flat"
-)
-submit_button.pack(pady=40)
+        self.title("History Quiz")
+        self.questions = questions
+        self.current_question = 0
+        self.score = 0
+        self.configure(bg=BG)
+        self.geometry("600x500")
+        self.name = tk.StringVar()
+        self.answer_var = tk.IntVar(value=-1)
+        self.answer_vars = []
 
-answer_vars = []
-
-def show_questions():
-    for q_index, question in enumerate(questions):
-        q_label = tk.Label(
-            root,
-            text=f"Question {q_index + 1}. {question['question']}",
+        self.name_label = tk.Label(
+            self,
+            text="Please enter your name in the box below👇🏿",
             bg=BG,
             fg=TEXT,
-            font=("Arial", 18),
-            wraplength=520,
-            justify="left"
+            font=("Arial", 18)
         )
-        q_label.pack(anchor="w", padx=40, pady=(20, 5))
+        self.name_label.pack(pady=10)
 
-        vars_for_question = []
+        self.name_entry = tk.Entry(
+            self,
+            textvariable=self.name,
+            font=("Arial", 18),
+            fg=TEXT
+        )
+        self.name_entry.pack(pady=10)
 
-        for option in question["options"]:
-            var = tk.IntVar()
-            cb = tk.Checkbutton(
-                root,
+        self.build_question_screen()
+
+        self.submit_button = tk.Button(
+            self,
+            text="SUBMIT!",
+            font=("Arial", 18),
+            fg=BUTTON_TEXT,
+            bg=BG
+        )
+        self.submit_button.pack(pady=10)
+
+    def build_question_screen(self):
+        """Builds the question screen."""
+
+        q_label = tk.Label(
+            self,
+            text=f"Question {self.current_question + 1}. "
+            f"{self.questions[self.current_question]['question']}",
+            font=("Arial", 18),
+            bg=BG,
+            fg=TEXT
+        )
+        q_label.pack(pady=10)
+
+        for option in self.questions[self.current_question]["options"]:
+            rb = tk.Radiobutton(
+                self,
                 text=option,
-                variable=var,
-                bg=BG,
-                fg=TEXT,
+                variable=self.answer_var,
                 font=("Arial", 14),
-                anchor="w",
-                justify="left"
+                bg=BG,
+                fg=TEXT
             )
-            cb.pack(anchor="w", padx=60)
-            vars_for_question.append(var)
+            rb.pack(anchor="w", pady=5)
+            self.answer_vars.append(rb)
 
-        answer_vars.append(vars_for_question)
 
-show_questions()
-
-root.mainloop()
+if __name__ == "__main__":
+    app = QuizApp(questions)
+    app.mainloop()

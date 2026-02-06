@@ -1,6 +1,7 @@
 import csv # for reading the CSV file
 
 def load_questions(filepath="questions.csv"):
+    
     """
     Load questions from a CSV file and return a list of question dictionaries.
     The output depends on external state (the contents of questions.csv) - not pure.
@@ -24,3 +25,4 @@ def load_questions(filepath="questions.csv"):
             })
 
     return questions
+
