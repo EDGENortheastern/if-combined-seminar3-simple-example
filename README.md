@@ -14,6 +14,8 @@ As an MVP, the app focuses on essential functionality: input collection, validat
 
 ## Design
 
+### GUI Design
+
 **Figure 1** shows the wireframe used during the early design stage of the application. The wireframe represents the intended user journey through the quiz, from entering a name and answering questions to submitting responses and reaching the confirmation screen.
 
 The wireframe was used to plan screen layout, validation points, and navigation flow before implementation. It does not represent the final visual appearance of the application, but instead focuses on structure, sequence, and user interaction.
@@ -22,10 +24,42 @@ The wireframe was used to plan screen layout, validation points, and navigation 
 
 **Figure 1:** Wireframe
 
+### Functional and Non-functional Requirements
+
+#### Functional Requirements**
+
+| ID  | Requirement |
+|-----|-------------|
+| FR1 | The application must allow a participant to enter their name. |
+| FR2 | The application must display a set of single-answer multiple-choice history questions. |
+| FR3 | ... |
+
+#### Non-functional Requirements**
+
+| ID   | Requirement |
+|------|-------------|
+| NFR1 | Text and background colours must have 4.5 : 1 contrast ratio for all text to ensure readability for all users. |
+| NFR2 | The application should run as a standalone desktop application. |
+| NFR3 | Stored data should be readable using standard software. |
+| NFR4 | ... |
+
+#### Tech Stack Outline
+
+- [Python 3](https://docs.python.org/3/) — core programming language
+- [Tkinter](https://docs.python.org/3/library/tkinter.html) — desktop graphical user interface
+- [csv](https://docs.python.org/3/library/csv.html) — local data storage in CSV format
+- [re](https://docs.python.org/3/library/re.html) — regular expressions for input validation
+- [datetime](https://docs.python.org/3/library/datetime.html) — timestamp generation
+- [unittest](https://docs.python.org/3/library/unittest.html) — automated unit testing
+
+#### Code Design
+
+🚧 **Class diagram under construction**
+
 ## Development
 
 ## Testing
 
-## 
+## Documentation
 
-
+## Evaluation
