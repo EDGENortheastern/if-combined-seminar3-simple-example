@@ -65,9 +65,14 @@ class QuizApp(tk.Tk):
         
         st_name = clean_name(self.name_entry.get())
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        answers = []
+        for var in self.answer_vars:
+            answers.append(var.get())
+            
         with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
-            writer.writerow([st_name, timestamp])
+            writer.writerow([st_name, timestamp, answwers])
 
     def build_question_screen(self):
         
