@@ -19,7 +19,6 @@ class QuizApp(tk.Tk):
 
     def __init__(self, questions):
         super().__init__()
-
         self.title("History Quiz")
         self.questions = questions
         self.current_question = 0
@@ -135,7 +134,7 @@ class QuizApp(tk.Tk):
         tk.Label(
             self,
             text=f"{name}, the assessor will let you know your results soon!",
-            font=("Arial", 14),
+            font=("Arial", 24),
             wraplength=500,
             justify="center",
             bg = BG
@@ -143,10 +142,11 @@ class QuizApp(tk.Tk):
 
         tk.Button(
             self,
+            font=("Arial", 18),
+            fg=BUTTON_TEXT,
+            bg=BG,
             text="QUIT",
-            command=self.destroy,
-            font=("Arial", 14),
-            fg = BUTTON_TEXT
+            command=self.destroy
         ).pack(pady=30)
         
     def validate_name_with_messages(self, cleaned_name: str) -> bool:
@@ -181,7 +181,9 @@ class QuizApp(tk.Tk):
         return valid
 
     def clear_screen(self):
+        
         """Removes all widgets from the window."""
+        
         for widget in self.winfo_children():
             widget.destroy()
 
