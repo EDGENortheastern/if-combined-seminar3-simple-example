@@ -21,7 +21,7 @@ class QuizApp(tk.Tk):
         self.current_question = 0
         self.score = 0
         self.configure(bg=BG)
-        self.geometry("600x500")
+        self.geometry("600x700")
         self.name = tk.StringVar()
         self.answer_var = tk.IntVar(value=-1)
         self.answer_vars = []
@@ -55,30 +55,36 @@ class QuizApp(tk.Tk):
         self.submit_button.pack(pady=10)
 
     def build_question_screen(self):
-        """Builds the question screen."""
+        
+        """Builds the question section."""
 
-        q_label = tk.Label(
-            self,
-            text=f"Question {self.current_question + 1}. "
-            f"{self.questions[self.current_question]['question']}",
-            font=("Arial", 18),
-            bg=BG,
-            fg=TEXT
-        )
-        q_label.pack(pady=10)
+        question_number = 1
 
-        for option in self.questions[self.current_question]["options"]:
-            rb = tk.Radiobutton(
+        for question in self.questions:
+            q_label = tk.Label(
                 self,
-                text=option,
-                variable=self.answer_var,
-                font=("Arial", 14),
-                bg=BG,
-                fg=TEXT
+                text=f"Question {question_number}. {question['question']}",
+                font=("Arial", 18),
+                wraplength=500,     # ← this is the key
+                justify="center",  
+                bg = BG
             )
-            rb.pack(anchor="w", pady=5)
-            self.answer_vars.append(rb)
+            q_label.pack(anchor="w", padx=40, pady=(20, 5))
 
+            answer_var = tk.IntVar(value=-1)
+            self.answer_vars.append(answer_var)
+
+            for option in question["options"]:
+                rb = tk.Radiobutton(
+                    self,
+                    text=option,
+                    variable=answer_var,
+                    font=("Arial", 14),
+                    bg =  BG
+                )
+                rb.pack(anchor="w", padx=60)
+
+            question_number += 1
 
 if __name__ == "__main__":
     app = QuizApp(questions)
