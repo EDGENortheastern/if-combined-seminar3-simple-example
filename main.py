@@ -59,24 +59,6 @@ class QuizApp(tk.Tk):
         )
         self.submit_button.pack(pady=10)
 
-    def handle_submit(self):
-        
-        """
-        Saves the student name, score and timestamp
-        to a CSV file.
-        """
-        
-        st_name = clean_name(self.name_entry.get())
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        answers = []
-        for var in self.answer_vars:
-            answers.append(var.get())
-            
-        with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow([st_name, timestamp, answers])
-
     def build_question_screen(self):
         
         """
@@ -113,6 +95,95 @@ class QuizApp(tk.Tk):
                 option_value += 1
 
             question_number += 1
+    
+    def handle_submit(self):
+        
+        """
+        Saves the student name, score and timestamp
+        to a CSV file.
+        """
+        
+        st_name = clean_name(self.name_entry.get())
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if self.validate_name_with_messages(st_name):
+
+            answers = []
+            for var in self.answer_vars:
+                answers.append(var.get())
+                    
+            with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
+                writer = csv.writer(file)
+                writer.writerow([st_name, timestamp, answers])
+
+            self.build_thank_you_screen(st_name)
+            
+            
+    def build_thank_you_screen(self, name):
+        
+        """Shows the final confirmation screen."""
+
+        self.clear_screen()
+
+        tk.Label(
+            self,
+            text="Thank you for submitting your answers, ",
+            font=("Arial", 18),
+            bg = BG
+        ).pack(pady=20)
+
+        tk.Label(
+            self,
+            text=f"{name}, the assessor will let you know your results soon!",
+            font=("Arial", 14),
+            wraplength=500,
+            justify="center",
+            bg = BG
+        ).pack(pady=10)
+
+        tk.Button(
+            self,
+            text="QUIT",
+            command=self.destroy,
+            font=("Arial", 14),
+            fg = BUTTON_TEXT
+        ).pack(pady=30)
+        
+    def validate_name_with_messages(self, cleaned_name: str) -> bool:
+        
+        """
+        Validates the cleaned name and shows an error message if invalid.
+        Returns True if the name is valid. Not pure because depends on messagebox.
+        """
+        valid = True
+
+        if not presence_check(cleaned_name):
+            messagebox.showerror(
+                "Invalid name",
+                "Please enter your name."
+            )
+            valid = False
+
+        if valid and not length_check(cleaned_name):
+            messagebox.showerror(
+                "Invalid name",
+                "Name must be between 2 and 50 characters."
+            )
+            valid = False
+
+        if valid and not character_check(cleaned_name):
+            messagebox.showerror(
+                "Invalid name",
+                "Names must only contain letters, spaces, hyphens, or apostrophes."
+            )
+            valid = False
+
+        return valid
+
+    def clear_screen(self):
+        """Removes all widgets from the window."""
+        for widget in self.winfo_children():
+            widget.destroy()
 
 if __name__ == "__main__":
     app = QuizApp(questions)
