@@ -2,7 +2,7 @@ import tkinter as tk # for creating the GUI
 import csv # to write to csv from main
 from quiz_data import load_questions # for loading the questions
 from quiz_utils import clean_name # cleans the name
-
+from datetime import datetime # to record a timestamp
 
 BG = "#ffe1a5"
 TEXT = "#111111"
@@ -59,10 +59,11 @@ class QuizApp(tk.Tk):
         self.submit_button.pack(pady=10)
 
     def handle_submit(self):
-        self.st_name = clean_name(self.name_entry.get())
+        st_name = clean_name(self.name_entry.get())
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open("student_records.csv", mode="a", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
-            writer.writerow(self.st_name)
+            writer.writerow([st_name, timestamp])
 
     def build_question_screen(self):
         
