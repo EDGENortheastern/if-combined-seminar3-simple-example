@@ -12,4 +12,20 @@ The application does not calculate or display a score to the participant. This i
 
 As an MVP, the app focuses on essential functionality: input collection, validation, and data storage. Features such as result calculation, data visualisation, and differentiated access levels are out of scope at this stage. This limited scope makes it suitable for early deployment and future refinement based on organisational needs. 
 
+## Design
+
+**Figure 1** shows the wireframe used during the early design stage of the application. The wireframe represents the intended user journey through the quiz, from entering a name and answering questions to submitting responses and reaching the confirmation screen.
+
+The wireframe was used to plan screen layout, validation points, and navigation flow before implementation. It does not represent the final visual appearance of the application, but instead focuses on structure, sequence, and user interaction.
+
+![Figure 1: Wireframe illustrating the user journey and screen flow of the History Quiz App](docs_assets/wireframe.png)
+
+**Figure 1:** Wireframe
+
+## Development
+
+## Testing
+
+## 
+
 
